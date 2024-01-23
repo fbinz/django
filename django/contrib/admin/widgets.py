@@ -2,6 +2,7 @@
 Form Widget classes specific to the Django admin site.
 """
 import copy
+import datetime
 import json
 
 from django import forms
@@ -94,6 +95,8 @@ class AdminSplitDateTime(forms.SplitDateTimeWidget):
         forms.MultiWidget.__init__(self, widgets, attrs)
 
     def get_context(self, name, value, attrs):
+        if isinstance(value, str):
+            value = datetime.datetime.fromisoformat(value)
         context = super().get_context(name, value, attrs)
         context["date_label"] = _("Date:")
         context["time_label"] = _("Time:")

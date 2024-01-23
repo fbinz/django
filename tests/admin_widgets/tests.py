@@ -458,6 +458,13 @@ class AdminSplitDateTimeWidgetTest(SimpleTestCase):
                 'name="test_1" size="8"></p>',
             )
 
+    def test_get_context(self):
+        # Test that the widget can be initialized with a ISO 8601 datetime string.
+        w = widgets.AdminSplitDateTime()
+        context = w.get_context("test", "2007-12-01T09:30:00", {})
+        self.assertEqual(context["widget"]["subwidgets"][0]["value"], "2007-12-01")
+        self.assertEqual(context["widget"]["subwidgets"][1]["value"], "09:30:00")
+
 
 class AdminURLWidgetTest(SimpleTestCase):
     def test_get_context_validates_url(self):
